@@ -72,7 +72,7 @@ def draw():
         pygame.draw.circle(screen, BLACK, new_coords(v), 4)
     if a_added:
         pygame.draw.circle(screen, BLACK, new_coords(a_added), 4)
-    if light and (mod is "edycja" or mod is "usuwanie"):
+    if light and (mod == "edycja" or mod == "usuwanie"):
         pygame.draw.circle(screen, BLUE, new_coords(light), 6)
     if hooked_point:
         pygame.draw.circle(screen, BLUE, pygame.mouse.get_pos(), 6)
@@ -119,21 +119,22 @@ def event_loop():
                     hooked_point = c
                 sol = algorithm.get_solution(a, b)
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if mod is "edycja":
+            if mod == "edycja":
                 hooked_point = find_point(pygame.mouse.get_pos())
         if event.type == pygame.MOUSEBUTTONUP:
             c = pygame.mouse.get_pos()
             fp = find_point(c)
             c = ((c[0] - ui_offset) / new_size[0], c[1] / new_size[1])
-            if mod is "dodawanie":
-                if not a_added:
-                    a_added = c
-                else:
-                    a.append(a_added)
-                    b.append(c)
-                    sol = algorithm.get_solution(a, b)
-                    a_added = None
-            if mod is "usuwanie" and len(a) is not 1 and fp:
+            if mod == "dodawanie":
+                if c[0] >= 0.0:
+                    if not a_added:
+                        a_added = c
+                    else:
+                        a.append(a_added)
+                        b.append(c)
+                        sol = algorithm.get_solution(a, b)
+                        a_added = None
+            if mod == "usuwanie" and len(a) != 1 and fp:
                 ai = a.index(fp) if fp in a else None
                 if ai is not None:
                     si = next(iter(i for i, (sa, sb) in enumerate(sol) if a[ai] is sa))
