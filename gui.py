@@ -109,15 +109,16 @@ def event_loop():
             if hooked_point:
                 c = pygame.mouse.get_pos()
                 c = ((c[0] - ui_offset) / new_size[0], c[1] / new_size[1])
-                ai = a.index(hooked_point) if hooked_point in a else None
-                if ai is not None:
-                    a[ai] = c
-                    hooked_point = c
-                else:
-                    bi = b.index(hooked_point)
-                    b[bi] = c
-                    hooked_point = c
-                sol = algorithm.get_solution(a, b)
+                if c[0] >= 0.0:
+                    ai = a.index(hooked_point) if hooked_point in a else None
+                    if ai is not None:
+                        a[ai] = c
+                        hooked_point = c
+                    else:
+                        bi = b.index(hooked_point)
+                        b[bi] = c
+                        hooked_point = c
+                    sol = algorithm.get_solution(a, b)
         if event.type == pygame.MOUSEBUTTONDOWN:
             if mod == "edycja":
                 hooked_point = find_point(pygame.mouse.get_pos())
