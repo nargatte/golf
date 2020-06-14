@@ -12,7 +12,7 @@ BLUE =  (  0,   0, 255)
 GREEN = (  0, 255,   0)
 RED =   (255,   0,   0)
 
-size = 800, 800
+size = 938, 768
 
 
 ui_offset = 170
@@ -24,9 +24,9 @@ def new_coords(v):
     return int(v[0] * new_size[0]) + ui_offset, int(v[1] * new_size[1])
 
 
-screen = pygame.display.set_mode(size, pygame.RESIZABLE)
+screen = pygame.display.set_mode(size)
 pygame.display.set_caption("AZ GOLF GUI")
-manager = pygame_gui.UIManager((800, 600))
+manager = pygame_gui.UIManager(size)
 
 random_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((10, 10), (150, 50)),
                                              text='Losuj punkty',
@@ -100,10 +100,6 @@ def event_loop():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        if event.type == pygame.VIDEORESIZE:
-            size = event.size
-            new_size = (size[0] - ui_offset, size[1])
-            screen = pygame.display.set_mode(size, pygame.RESIZABLE)
         if event.type == pygame.MOUSEMOTION:
             light = find_point(pygame.mouse.get_pos())
             if hooked_point:
